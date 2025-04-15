@@ -82,6 +82,19 @@ describe("findPath", () => {
     expect(pathInstructions).to.be.an("array");
     // More detailed tests would involve analyzing the *content* of pathInstructions if you define a specific output format.
   });
+
+  it("straught horizontal path, no turns", () =>{
+    const turtle = new SimpleTurtle();
+  const points: Point[] = [
+    { x: 0, y: 0 },
+    { x: 50, y: 0 },
+    { x: 100, y: 0 },
+  ];
+
+  const path = findPath(turtle, points);
+  expect(path.length).to.equal(2); // Only 2 forwards
+  expect(path.every(instr => instr.startsWith("forward"))).to.be.true;
+  })
 });
 
 describe("drawPersonalArt", () => {

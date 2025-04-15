@@ -72,8 +72,33 @@ export function distance(p1: Point, p2: Point): number {
  *          The function primarily needs to *calculate* the path conceptually.
  */
 export function findPath(turtle: Turtle, points: Point[]): string[] {
-  // TODO: Implement findPath (conceptually, you don't need to *execute* the path here)
-  return []; // Placeholder
+  if (points.length < 2) return [];
+
+  const instructions: string[] = [];
+  let heading = 0;
+
+  for (let i = 0; i < points.length - 1; i++) {
+    const from = points[i];
+    const to = points[i + 1];
+
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const segmentLength = Math.sqrt(dx * dx + dy * dy);
+    const angleDeg = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+    let turn = angleDeg - heading;
+    if (turn > 180) turn -= 360;
+    if (turn < -180) turn += 360;
+
+    if (Math.abs(turn) > 1e-6) {
+      instructions.push(`turn ${turn.toFixed(2)}`);
+    }
+
+    instructions.push(`forward ${segmentLength.toFixed(2)}`);
+    heading = angleDeg;
+  }
+
+  return instructions;
 }
 
 /**
@@ -166,7 +191,7 @@ export function main(): void {
   console.log("Chord length for radius 5, angle 60 degrees:", chordLength(5, 60));
 
   // Draw an approximate circle
-  drawApproximateCircle(turtle, 50, 360);
+  // drawApproximateCircle(turtle, 50, 360);
 
   // Example distance calculation (for testing in console)
   // const p1: Point = {x: 1, y: 2};
@@ -174,9 +199,9 @@ export function main(): void {
   // console.log("Distance between p1 and p2:", distance(p1, p2));
 
   // Example findPath (conceptual - prints path to console)
-  // const pointsToVisit: Point[] = [{x: 20, y: 20}, {x: 80, y: 20}, {x: 80, y: 80}];
-  // const pathInstructions = findPath(turtle, pointsToVisit);
-  // console.log("Path instructions:", pathInstructions);
+  const pointsToVisit: Point[] = [{x: 20, y: 20}, {x: 80, y: 20}, {x: 80, y: 80}];
+  const pathInstructions = findPath(turtle, pointsToVisit);
+  console.log("Path instructions:", pathInstructions);
 
   // Draw personal art
   // drawPersonalArt(turtle);
