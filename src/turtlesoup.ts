@@ -57,7 +57,9 @@ export function drawApproximateCircle(
  */
 export function distance(p1: Point, p2: Point): number {
   // TODO: Implement distance
-  return 0; // Placeholder
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
+  return Math.sqrt(dx ** 2 + dy ** 2);
 }
 
 /**
