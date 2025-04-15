@@ -22,8 +22,10 @@ export function drawSquare(turtle: Turtle, sideLength: number): void {
  * @returns The length of the chord.
  */
 export function chordLength(radius: number, angleInDegrees: number): number {
-  // TODO: Implement chordLength
-  return 0; // Placeholder - replace with your implementation
+  const angleRadians = angleInDegrees * (Math.PI / 180);
+  const result = 2 * radius * Math.sin(angleRadians / 2); 
+  return Math.round(result * 1000) /1000;
+  
 }
 
 /**
