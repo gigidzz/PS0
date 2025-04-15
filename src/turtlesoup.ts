@@ -109,11 +109,43 @@ export function findPath(turtle: Turtle, points: Point[]): string[] {
  * @param turtle The turtle to use.
  */
 export function drawPersonalArt(turtle: Turtle): void {
-  // TODO: Implement drawPersonalArt
-  // Example - replace with your own art!
-  for (let i = 0; i < 6; i++) {
-    turtle.forward(50);
-    turtle.turn(60);
+
+  turtle.forward(50);
+  turtle.turn(-90);           
+  turtle.forward(170);       
+  turtle.turn(90);          
+
+  const colorPalette: Color[] = [
+    "cyan", "magenta", "blue", "green", "purple"
+  ];
+
+  const layers = 4;
+  const spikesPerLayer = 8;
+  const baseLength = 30;
+
+  for (let layer = 0; layer < layers; layer++) {
+    const currentLength = baseLength + layer * 10;
+    turtle.color(colorPalette[layer % colorPalette.length]);
+
+    for (let i = 0; i < spikesPerLayer; i++) {
+      turtle.forward(currentLength);
+      turtle.turn(45);
+      turtle.forward(currentLength / 2);
+      turtle.turn(-90);
+      turtle.forward(currentLength / 2);
+      turtle.turn(45);
+      turtle.forward(currentLength);
+      turtle.turn(360 / spikesPerLayer);
+    }
+
+    turtle.turn(15);
+  }
+
+  //inner curl
+  turtle.color("black");
+  for (let i = 0; i < 18; i++) {
+    turtle.forward(20);
+    turtle.turn(100);
   }
 }
 
@@ -122,7 +154,7 @@ function generateHTML(
 ): string {
   const canvasWidth = 500;
   const canvasHeight = 500;
-  const scale = 1; // Adjust scale as needed
+  const scale = 1; 
   const offsetX = canvasWidth / 2; // Center the origin
   const offsetY = canvasHeight / 2; // Center the origin
 
@@ -204,7 +236,7 @@ export function main(): void {
   console.log("Path instructions:", pathInstructions);
 
   // Draw personal art
-  // drawPersonalArt(turtle);
+  drawPersonalArt(turtle);
 
   const htmlContent = generateHTML((turtle as SimpleTurtle).getPath()); // Cast to access getPath
   saveHTMLToFile(htmlContent);
